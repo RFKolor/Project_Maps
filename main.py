@@ -1,6 +1,7 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit, QLabel
 import sys
 import requests
+from PyQt5.QtGui import QPixmap
 from io import BytesIO
 import requests
 from PIL import Image
@@ -38,6 +39,14 @@ class Widget(QWidget):
         im = Image.open(BytesIO(
             response.content))
         im.save('res.png')
+        self.pixmap = QPixmap('res.png')
+        # Если картинки нет, то QPixmap будет пустым,
+        # а исключения не будет
+        self.image = QLabel(self)
+        self.image.move(0, 0)
+        self.image.resize(500, 400)
+        # Отображаем содержимое QPixmap в объекте QLabel
+        self.image.setPixmap(self.pixmap)
 
     def initUI(self):
         self.setGeometry(200, 200, 500, 500)
