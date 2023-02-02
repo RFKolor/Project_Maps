@@ -21,8 +21,22 @@ class Widget(QWidget):
         self.y_line.move(0, 450)
         self.choose_btn.resize(100, 50)
         self.choose_btn.move(200, 425)
-        toponym_coodrinates = '72.582114 61.113427'
-        print(toponym_coodrinates)
+        self.do_image()
+        self.pixmap = QPixmap('res.png')
+        # Если картинки нет, то QPixmap будет пустым,
+        # а исключения не будет
+        self.image = QLabel(self)
+        self.image.move(0, 0)
+        self.image.resize(500, 400)
+        # Отображаем содержимое QPixmap в объекте QLabel
+        self.image.setPixmap(self.pixmap)
+
+    def initUI(self):
+        self.setGeometry(200, 200, 500, 500)
+        self.setWindowTitle("Яндекс карты")
+
+    def do_image(self):
+        toponym_coodrinates = '45 55'
         toponym_longitude, toponym_lattitude = toponym_coodrinates.split(" ")
 
         delta = "0.005"
@@ -39,18 +53,6 @@ class Widget(QWidget):
         im = Image.open(BytesIO(
             response.content))
         im.save('res.png')
-        self.pixmap = QPixmap('res.png')
-        # Если картинки нет, то QPixmap будет пустым,
-        # а исключения не будет
-        self.image = QLabel(self)
-        self.image.move(0, 0)
-        self.image.resize(500, 400)
-        # Отображаем содержимое QPixmap в объекте QLabel
-        self.image.setPixmap(self.pixmap)
-
-    def initUI(self):
-        self.setGeometry(200, 200, 500, 500)
-        self.setWindowTitle("Яндекс карты")
 
 
 if __name__ == "__main__":
